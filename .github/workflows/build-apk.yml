@@ -14,6 +14,7 @@ jobs:
       - run: npm install
       - run: npm run prepare-web
       - run: npx cap add android
+      - run: node scripts/native.js
       - run: npx @capacitor/assets generate --android --iconBackgroundColor '#0f766e' --iconBackgroundColorDark '#0b4f4a' || true
       - run: npx cap sync android
       - run: |
