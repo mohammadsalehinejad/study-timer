@@ -57,7 +57,7 @@ clk('appearBtn', function () { setMenu(false); syncPickers(); $('appDlg').showMo
 clk('mScreen', function () { alert('نمایش اسکرین‌تایم گوشی به‌زودی اضافه می‌شود.'); });
 clk('mSubj', openMg); clk('mPdf', exportPdf); clk('mXls', exportXlsx);
 clk('mClear', function () {
-  if (!confirm('همهٔ داده‌ها (بازه‌ها، دروس و اهداف) پاک شود؟ این کار قابل بازگشت نیست.')) return;
+  if (!confirm('همهٔ بازه‌ها، دروس و اهداف پاک شود؟ (پروفایل و یادداشت‌ها پاک نمی‌شوند.) این کار قابل بازگشت نیست.')) return;
   sessions = []; subjects = []; goals = {}; active = null; lastSub = '';
   kioskOff(); save(); saveG(); render(); renderGoals(); tick();
 });
