@@ -12,7 +12,7 @@ rep('<meta name="viewport" content="width=device-width, initial-scale=1">', '<me
 const css = `
 /* ===== Android UI ===== */
 html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
-body{padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(56px + env(safe-area-inset-bottom,0px));overscroll-behavior-y:none}
+body{padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overscroll-behavior-y:none}
 button,.tool,.mitem{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 .top{justify-content:flex-start}.top h1{flex:1}
 .hamb{font:inherit;font-size:1.5rem;line-height:1;width:46px;height:46px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer}
@@ -32,6 +32,31 @@ button,.tool,.mitem{touch-action:manipulation;-webkit-user-select:none;user-sele
 .mgrow input[type=number]{width:112px;font:inherit;padding:8px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink)}
 .ed{background:none;border:0;color:var(--muted);cursor:pointer;font:inherit;font-size:1.05rem;padding:2px 8px;border-radius:6px}
 .ed:hover{color:var(--accent)}.acts{white-space:nowrap}
+.page{display:none}.page.on{display:block}
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -4px 16px rgba(0,0,0,.08)}
+.bnav button{flex:1;font:inherit;font-size:.72rem;background:none;border:0;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px;min-height:62px;cursor:pointer}
+.bnav svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bnav button.on{color:var(--accent);font-weight:700}
+.pcover{height:130px;border-radius:16px;background:linear-gradient(135deg,var(--hero1),var(--hero2)) center/cover}
+.phead{display:flex;justify-content:space-between;align-items:flex-end;padding:0 16px;margin-top:-46px}
+.av{border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;overflow:hidden;font-weight:700;flex:none;border:4px solid var(--bg)}
+.av img{width:100%;height:100%;object-fit:cover}
+.av.big{width:92px;height:92px;font-size:2.2rem}.av.sm{width:42px;height:42px;font-size:1.1rem;border-width:0}
+.pinfo{padding:10px 16px}.pname{font-size:1.3rem;font-weight:700}
+.puser{color:var(--muted);font-size:.9rem;direction:ltr;unicode-bidi:plaintext;display:inline-block}
+.ntime{color:var(--muted);font-size:.85rem}
+.pbio{margin:8px 0;white-space:pre-wrap}
+.pstats{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.pstats b{color:var(--ink)}
+.pfeed{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:8px}
+.compose,.note{display:flex;gap:12px;padding:14px 16px;border-top:1px solid var(--line)}
+.pfeed>:first-child{border-top:0}
+.compose>div,.nb{flex:1;min-width:0}
+textarea{font:inherit;width:100%;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);resize:vertical}
+.nbar{display:flex;justify-content:flex-end;margin-top:8px}
+.nh{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.ntxt{white-space:pre-wrap;word-break:break-word;margin:4px 0}
+.ndel{background:none;border:0;cursor:pointer;margin-inline-start:auto;opacity:.6}.ndel:hover{opacity:1}
+.pprev{position:relative;margin-bottom:50px}.pprev .av{position:absolute;right:16px;bottom:-44px}
 @media(max-width:640px){
   body{padding-left:12px;padding-right:12px}
   h1{font-size:1.2rem}
@@ -71,7 +96,7 @@ rep(`sessions.push({ start: active.start, end: Date.now(), sub: active.sub });`,
 // تیک و راه‌اندازی
 rep(`if (dayKey(now) !== qDay) { renderQuote(); render(); }`, `tickExtra(now); if (dayKey(now) !== qDay) { renderQuote(); render(); }`);
 rep(`load(); loadUI(); renderQuote(); render(); tick();`, `load(); loadUI(); initExtra(); renderQuote(); render(); tick();`);
-rep(`// ---------- init ----------`, fs.readFileSync('scripts/inject.js', 'utf8') + '\n  // ---------- init ----------');
+rep(`// ---------- init ----------`, fs.readFileSync('scripts/inject.js', 'utf8') + '\n' + fs.readFileSync('scripts/inject2.js', 'utf8') + '\n  // ---------- init ----------');
 
 rep('</body>', `
 <script>
@@ -84,11 +109,20 @@ rep('</body>', `
     if (dlg) { dlg.close(); return; }
     var menu = document.getElementById('menu');
     if (menu && !menu.hidden) { menu.hidden = true; return; }
+    if (window.__navBack && window.__navBack()) return;
     App.minimizeApp();
   });
 })();
 </script>
 </body>`);
+
+// «مورد مطالعه» ← «درس» (به‌جز متن جمله‌های انگیزشی)
+function ren(t) {
+  return t.split('موارد مطالعه').join('دروس').split('مورد مطالعه').join('درس').split('همه موارد').join('همه دروس').split('بدون مورد').join('بدون درس')
+    .split('یک مورد').join('یک درس').split('این مورد').join('این درس').split('موردی').join('درسی').split('مورد «').join('درس «');
+}
+var qa = h.indexOf('var QUOTES_RAW = ['), qb2 = h.indexOf('var QUOTES = [];');
+h = ren(h.slice(0, qa)) + h.slice(qa, qb2) + ren(h.slice(qb2));
 
 fs.mkdirSync('www', { recursive: true });
 fs.writeFileSync('www/index.html', h);
