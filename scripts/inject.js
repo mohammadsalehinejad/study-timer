@@ -1,6 +1,7 @@
 // ===== افزودنی‌ها (داخل برنامه تزریق می‌شود) =====
 var K_O = 'studyTimer.opts.v1', K_G = 'studyTimer.goals.v1', O = ld(K_O, {}), goals = ld(K_G, {}), editIdx = -1, lastMin = 0, kLast = 0;
 if (O.auto === undefined) O.auto = true;
+if (O.quote === undefined) O.quote = true;
 function saveO() { try { localStorage.setItem(K_O, JSON.stringify(O)); } catch (e) {} }
 function saveG() { try { localStorage.setItem(K_G, JSON.stringify(goals)); } catch (e) {} }
 function native() { var C = window.Capacitor; return !!(C && C.isNativePlatform && C.isNativePlatform()); }
@@ -30,6 +31,7 @@ menu.innerHTML =
   '<button class="mitem" id="mBackup" type="button" role="menuitem"><span>⬇️ دانلود گزارش (پشتیبان)</span></button>' +
   '<button class="mitem" id="mUpload" type="button" role="menuitem"><span>⬆️ آپلود گزارش</span></button>' +
   '<button class="mitem" id="appearBtn" type="button" role="menuitem"><span>🎨 تنظیمات ظاهری</span></button>' +
+  '<button class="mitem" id="mPie" type="button" role="menuitem"><span>🥧 تصویر نمودار مطالعه</span></button>' +
   '<button class="mitem" id="mPdf" type="button" role="menuitem"><span>📄 خروجی PDF</span></button>' +
   '<button class="mitem" id="mXls" type="button" role="menuitem"><span>📊 خروجی Excel</span></button>' +
   '<label class="mitem" for="optKiosk"><span>🔒 قفل هنگام مطالعه</span><input type="checkbox" class="switch" id="optKiosk" role="switch"></label>' +
