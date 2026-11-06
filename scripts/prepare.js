@@ -14,7 +14,7 @@ const css = `
 html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
 body{padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overscroll-behavior-y:none}
 button,.tool,.mitem{touch-action:manipulation;-webkit-user-select:none;user-select:none}
-.top{justify-content:flex-start}.top h1{flex:1}
+.top{justify-content:flex-start}.top h1{flex:1;text-align:left}
 .hamb{font:inherit;font-size:1.5rem;line-height:1;width:46px;height:46px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer}
 .menu{left:auto;right:0;max-height:75vh;overflow:auto;min-width:270px}
 .mitem.danger{color:var(--stop)}
@@ -58,6 +58,16 @@ textarea{font:inherit;width:100%;padding:10px;border:1px solid var(--line);borde
 .ntxt{white-space:pre-wrap;word-break:break-word;margin:4px 0}
 .ndel{background:none;border:0;cursor:pointer;margin-inline-start:auto;opacity:.6}.ndel:hover{opacity:1}
 .pprev{position:relative;margin-bottom:50px}.pprev .av{position:absolute;right:16px;bottom:-44px}
+.mhead{padding:10px 12px 2px;color:var(--muted);font-size:.78rem;font-weight:700}
+.msep{border:0;border-top:1px solid var(--line);margin:6px 8px}
+.opt{display:flex;flex-direction:column;gap:3px;width:100%;text-align:right;font:inherit;padding:14px 16px;margin:0 0 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer}
+.opt b{font-size:1rem}.opt span{color:var(--muted);font-size:.85rem;opacity:.85}.opt:hover{border-color:var(--accent)}
+.sjm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.gh{margin:16px 0 4px;color:var(--muted);font-size:.9rem}
+.gsec{margin:10px 0}.gname{font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.gin{display:flex;align-items:center;gap:8px}
+.gin input{font:inherit;width:76px;padding:8px;text-align:center;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink)}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block}
 dialog.wide{max-height:calc(100vh - 120px - env(safe-area-inset-top,0px))}
 #pDlg{margin-top:calc(env(safe-area-inset-top,0px) + 56px)}
 .compose textarea{min-height:150px}
@@ -131,7 +141,7 @@ h = h.replace(/(<title>)[^<]*(<\/title>)/, '$1ساعت مطالعه$2').replace(
 // «مورد مطالعه» ← «درس» (به‌جز متن جمله‌های انگیزشی)
 function ren(t) {
   return t.split('موارد مطالعه').join('دروس').split('مورد مطالعه').join('درس').split('همه موارد').join('همه دروس').split('بدون مورد').join('بدون درس')
-    .split('یک مورد').join('یک درس').split('این مورد').join('این درس').split('موردی').join('درسی').split('مورد «').join('درس «');
+    .split('یک مورد').join('یک درس').split('این مورد').join('این درس').split('موردی').join('درسی').split('مورد «').join('درس «').split('انصراف').join('لغو');
 }
 var qa = h.indexOf('var QUOTES_RAW = ['), qb2 = h.indexOf('var QUOTES = [];');
 h = ren(h.slice(0, qa)) + h.slice(qa, qb2) + ren(h.slice(qb2));
