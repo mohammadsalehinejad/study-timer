@@ -12,9 +12,10 @@ document.body.insertAdjacentHTML('beforeend', '<nav class="bnav" aria-label="ن�
   navBtn('home', 'خانه', '<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h4.5v-6h4v6h4.5V10"/>') +
   navBtn('list', 'بازه‌ها', '<rect x="2" y="8" width="15" height="9" rx="2"/><circle cx="9.5" cy="12.5" r="2.4"/><path d="M17 10.5 22 8M17 12.5h5M17 14.5l5 2.5M5 17v2M14 17v2"/>') +
   navBtn('stat', 'آمار', '<path d="M18 5H6l6 7-6 7h12"/>') +
-  navBtn('prof', 'پروفایل', '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>') + '</nav>');
+  navBtn('prof', 'یادداشت‌ها', '<rect x="5" y="3" width="15" height="18" rx="2"/><path d="M9 8h7M9 12h7M9 16h4M2.5 7.5h4M2.5 12h4M2.5 16.5h4"/>') + '</nav>');
+var TITLES = { home: 'ثبت بازه مطالعه', list: 'بازه‌های مطالعاتی', stat: 'آمار مجموع ساعات مطالعه', prof: 'یادداشت‌های روزانه' };
 function showTab(t) {
-  curTab = t;
+  curTab = t; document.querySelector('.top h1').textContent = TITLES[t];
   Object.keys(PG).forEach(function (k) {
     PG[k].classList.toggle('on', k === t);
     var b = document.querySelector('[data-tab="' + k + '"]'); b.classList.toggle('on', k === t);
@@ -48,7 +49,7 @@ function renderProfile() {
     '<div class="pinfo"><div class="pname">' + esc(prof.name || 'نام خودت را انتخاب کن') + '</div>' + userTag() +
     (prof.bio ? '<p class="pbio">' + esc(prof.bio) + '</p>' : '<p class="pbio hint">بیو ننوشته‌ای؛ از «ویرایش پروفایل» اضافه کن.</p>') +
     '<div class="pstats"><span><b>' + faNum(Math.round(tot / 36e5 * 10) / 10) + '</b> ساعت مطالعه</span><span><b>' + faNum(Object.keys(days).length) + '</b> روز فعال</span><span><b>' + faNum(notes.length) + '</b> یادداشت</span></div></div>' +
-    '<div class="pfeed"><div class="compose">' + avHtml('sm') + '<div><textarea id="nText" rows="2" maxlength="1000" placeholder="چه خبر؟ یک یادداشت برای خودت بنویس…"></textarea><div class="nbar"><button class="tool primary" id="nPost" type="button">ثبت یادداشت</button></div></div></div>' +
+    '<div class="pfeed"><div class="compose"><div><textarea id="nText" rows="6" maxlength="1000" placeholder="چه خبر؟ یک یادداشت برای خودت بنویس…"></textarea><div class="nbar"><button class="tool primary" id="nPost" type="button">ثبت یادداشت</button></div></div></div>' +
     (notes.length ? notes.map(noteHtml).join('') : '<div class="empty" style="display:block">هنوز یادداشتی نگذاشته‌ای.</div>') + '</div>';
 }
 document.body.insertAdjacentHTML('beforeend',
