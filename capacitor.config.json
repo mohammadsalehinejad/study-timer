@@ -1,6 +1,6 @@
 {
   "appId": "com.studytimer.app",
-  "appName": "ثبت مطالعه",
+  "appName": "ساعت مطالعه",
   "webDir": "www",
   "android": { "backgroundColor": "#0e1816" }
 }
