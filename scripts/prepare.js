@@ -38,7 +38,8 @@ button,.tool,.mitem{touch-action:manipulation;-webkit-user-select:none;user-sele
 .bnav svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .bnav button.on{color:var(--accent);font-weight:700}
 .pcover{height:130px;border-radius:16px;background:linear-gradient(135deg,var(--hero1),var(--hero2)) center/cover}
-.phead{display:flex;justify-content:space-between;align-items:flex-end;padding:0 16px;margin-top:-46px}
+.phead{display:flex;justify-content:space-between;align-items:flex-start;padding:0 16px;margin-top:-46px}
+.phead .tool{margin-top:58px}
 .av{border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;overflow:hidden;font-weight:700;flex:none;border:4px solid var(--bg)}
 .av img{width:100%;height:100%;object-fit:cover}
 .av.big{width:92px;height:92px;font-size:2.2rem}.av.sm{width:42px;height:42px;font-size:1.1rem;border-width:0}
@@ -57,6 +58,14 @@ textarea{font:inherit;width:100%;padding:10px;border:1px solid var(--line);borde
 .ntxt{white-space:pre-wrap;word-break:break-word;margin:4px 0}
 .ndel{background:none;border:0;cursor:pointer;margin-inline-start:auto;opacity:.6}.ndel:hover{opacity:1}
 .pprev{position:relative;margin-bottom:50px}.pprev .av{position:absolute;right:16px;bottom:-44px}
+dialog.wide{max-height:calc(100vh - 120px - env(safe-area-inset-top,0px))}
+#pDlg{margin-top:calc(env(safe-area-inset-top,0px) + 56px)}
+.compose textarea{min-height:150px}
+.stchart{display:flex;gap:6px;height:200px;align-items:stretch;margin:12px 0;padding-top:4px}
+.stcol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;min-width:0}
+.stbar{width:70%;background:var(--accent);border-radius:8px 8px 0 0;min-height:2px}
+.stcol.today .stbar{background:var(--stop)}
+.stval{font-size:.7rem;color:var(--muted)}.stlab{font-size:.72rem;text-align:center}
 @media(max-width:640px){
   body{padding-left:12px;padding-right:12px}
   h1{font-size:1.2rem}
@@ -96,7 +105,7 @@ rep(`sessions.push({ start: active.start, end: Date.now(), sub: active.sub });`,
 // تیک و راه‌اندازی
 rep(`if (dayKey(now) !== qDay) { renderQuote(); render(); }`, `tickExtra(now); if (dayKey(now) !== qDay) { renderQuote(); render(); }`);
 rep(`load(); loadUI(); renderQuote(); render(); tick();`, `load(); loadUI(); initExtra(); renderQuote(); render(); tick();`);
-rep(`// ---------- init ----------`, fs.readFileSync('scripts/inject.js', 'utf8') + '\n' + fs.readFileSync('scripts/inject2.js', 'utf8') + '\n  // ---------- init ----------');
+rep(`// ---------- init ----------`, fs.readFileSync('scripts/inject.js', 'utf8') + '\n' + fs.readFileSync('scripts/inject2.js', 'utf8') + '\n' + fs.readFileSync('scripts/inject3.js', 'utf8') + '\n  // ---------- init ----------');
 
 rep('</body>', `
 <script>
@@ -115,6 +124,9 @@ rep('</body>', `
 })();
 </script>
 </body>`);
+
+rep('ساعت سیستم:', 'ساعت:');
+h = h.replace(/(<title>)[^<]*(<\/title>)/, '$1ساعت مطالعه$2').replace(/: 'ثبت بازه.های مطالعه';/, ": 'ساعت مطالعه';");
 
 // «مورد مطالعه» ← «درس» (به‌جز متن جمله‌های انگیزشی)
 function ren(t) {
